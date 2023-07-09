@@ -1,0 +1,10 @@
+diffusers>=0.18.1
+transformers
+accelerate
+safetensors
+numpy>=1.17
+PyWavelets>=1.1.1
+opencv-python>=4.1.0.25
+invisible-watermark
+runpod==0.10.0
+xformers==0.0.20
