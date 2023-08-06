@@ -21,12 +21,11 @@ RUN pip install --upgrade pip && \
     rm /requirements.txt
 
 # Fetch model
-COPY builder/cache_models.py /cache_models.py
+# COPY builder/cache_models.py /cache_models.py
 
-RUN python /cache_models.py
-RUN rm /cache_models.py
+# RUN python /cache_models.py
+# RUN rm /cache_models.py
 
 ADD src .
 
 CMD [ "python", "-u", "/rp_handler.py" ]
-

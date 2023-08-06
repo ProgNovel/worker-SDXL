@@ -6,6 +6,6 @@ INPUT_SCHEMA = {
       'num_inference_steps': {
         'type': int,
         'required': False,
-        'default': 50
+        'default': 30
     }
 }

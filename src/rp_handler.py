@@ -14,13 +14,13 @@ from runpod.serverless.utils.rp_validator import validate
 from rp_schemas import INPUT_SCHEMA
 
 # Setup the models
-pipe = StableDiffusionXLPipeline.from_pretrained(
-    "stabilityai/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16, variant="fp16", use_safetensors=True
+pipe = StableDiffusionXLPipeline.from_single_file(
+    "/models/sdxl-base-1.0.safetensors", torch_dtype=torch.float16, variant="fp16", use_safetensors=True
 )
 pipe.to("cuda")
 
-refiner = StableDiffusionXLImg2ImgPipeline.from_pretrained(
-    "stabilityai/stable-diffusion-xl-refiner-1.0", torch_dtype=torch.float16, use_safetensors=True, variant="fp16"
+refiner = StableDiffusionXLImg2ImgPipeline.from_single_file(
+    "/models/sdxl-refiner-1.0.safetensors", torch_dtype=torch.float16, use_safetensors=True, variant="fp16"
 )
 refiner.to("cuda")
 
@@ -55,7 +55,7 @@ def generate_image(job):
     image = pipe(prompt=prompt,num_inference_steps=num_inference_steps , output_type="latent").images[0]
 
     # Refine the image using refiner
-    output = refiner(prompt=prompt, num_inference_steps=num_inference_steps, image=image[None, :]).images[0]
+    output = refiner(prompt=prompt, num_inference_steps=num_inference_steps / 4, image=image[None, :]).images[0]
 
     image_urls = _save_and_upload_images([output], job['id'])
 
